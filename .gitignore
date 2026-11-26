@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.DS_Store
+
+# trained model files (too large / generated output)
+*.model
+*.pt
+*.pth
+
+# notebook checkpoints
+.ipynb_checkpoints/
+
+# generated figures from experiments (keep figures/ which are publication figures)
+examples/*.png
+examples/africa_results.png
+examples/baseline_comparison.png
+examples/tradeoff_figure.png
