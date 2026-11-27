@@ -50,11 +50,16 @@ def evaluate(original: pd.DataFrame, reconstructed: pd.DataFrame) -> dict:
         recon_vec = np.array([recon_counts.get(c, 0) for c in all_cats], dtype=float)
 
         # distribution overlap (1 - total variation distance)
-        orig_p  = orig_vec  / orig_vec.sum()
-        recon_p = recon_vec / recon_vec.sum()
-        overlap = 1 - 0.5 * np.abs(orig_p - recon_p).sum()
-
-        chi2, chi2_p = stats.chisquare(recon_vec + 1e-9, f_exp=orig_vec + 1e-9)
+        if orig_vec.sum() == 0 or recon_vec.sum() == 0:
+            overlap  = 0.0
+            chi2_p   = 0.0
+        else:
+            orig_p  = orig_vec  / orig_vec.sum()
+            recon_p = recon_vec / recon_vec.sum()
+            overlap  = 1 - 0.5 * np.abs(orig_p - recon_p).sum()
+            obs = recon_vec + 1e-9
+            exp = (orig_vec + 1e-9) * (obs.sum() / (orig_vec + 1e-9).sum())
+            _, chi2_p = stats.chisquare(obs, f_exp=exp)
         col_score = overlap * 100
         scores.append(col_score)
 
