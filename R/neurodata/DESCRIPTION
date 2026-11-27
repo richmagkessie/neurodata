@@ -1,0 +1,20 @@
+Package: neurodata
+Type: Package
+Title: Neural Dataset Encoding for Privacy-Preserving Data Sharing
+Version: 0.1.0
+Authors@R: person("Richmond", "Kessie",
+    role = c("aut", "cre"))
+Description: R interface to NeuroData. Encodes a tabular dataset as a compact
+    neural network (.model file) for privacy-preserving sharing. Recipients
+    query the model like a data frame — no raw data ever leaves the data owner.
+    Supports optional differential privacy (DP-SGD) and AES-256-GCM encryption.
+    Wraps the Python neurodata package via reticulate.
+License: MIT
+Encoding: UTF-8
+Imports:
+    reticulate (>= 1.28)
+Suggests:
+    dplyr,
+    tibble,
+    knitr
+RoxygenNote: 7.2.3

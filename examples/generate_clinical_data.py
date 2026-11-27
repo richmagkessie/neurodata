@@ -161,7 +161,7 @@ trial_outcome = np.array([
 
 # ── Assemble DataFrame ────────────────────────────────────────────────────────
 df = pd.DataFrame({
-    'patient_id':              [f'KHR{str(i).zfill(4)}' for i in range(1, N+1)],
+    'patient_id':              [f'PAT{str(i).zfill(4)}' for i in range(1, N+1)],
     'age_months':              age_months,
     'sex':                     sex,
     'weight_kg':               weight,

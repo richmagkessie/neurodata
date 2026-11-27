@@ -253,7 +253,7 @@ ax5.axhline(report_nodp['overall_score'], linestyle='--', color='#1e5f9e',
             linewidth=1.8, label=f'No-DP ceiling ({report_nodp["overall_score"]:.0f})')
 ax5.set_xlabel('Privacy Budget ε (smaller = stronger privacy)')
 ax5.set_ylabel('Fidelity Score (0–100)')
-ax5.set_title('F. Privacy–Utility Tradeoff\nKHRC Clinical Trial Data', fontsize=10, fontweight='bold')
+ax5.set_title('F. Privacy–Utility Tradeoff\nSynthetic Clinical Trial Data', fontsize=10, fontweight='bold')
 ax5.legend(fontsize=8); ax5.grid(alpha=0.3)
 ax5.set_xscale('log')
 
@@ -261,6 +261,6 @@ fig.suptitle('NeuroData: Privacy-Preserving Clinical Trial Data Sharing\n'
              'Synthetic Paediatric Malaria RCT  (N=600, 3-arm, parameterised from published literature)',
              fontsize=13, fontweight='bold', y=0.98)
 
-out_fig = str(OUT.parent / 'figures' / 'fig_khrc_clinical.png')
+out_fig = str(OUT.parent / 'figures' / 'fig_clinical_trial.png')
 plt.savefig(out_fig, dpi=150, bbox_inches='tight')
 print(f"\nFigure saved → {out_fig}")
