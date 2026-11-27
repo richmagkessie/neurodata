@@ -1,15 +1,15 @@
 # NeuroData
 
-**NeuroData** encodes a tabular dataset as a compact neural network. Instead of sharing a CSV file, you share a `.model` file. Recipients query it like a DataFrame — no raw data ever leaves the data owner.
+**NeuroData** encodes a tabular dataset as a compact neural network. Instead of sharing a CSV file, you share a `.kess` file. Recipients query it like a DataFrame — no raw data ever leaves the data owner.
 
 ```python
 import neurodata
 
 # Data owner: encode the dataset once
-neurodata.fit(df, 'health_data.model', password='secret')
+neurodata.fit(df, 'health_data.kess', password='secret')
 
 # Researcher: query without ever seeing the raw data
-data = neurodata.load('health_data.model', password='secret')
+data = neurodata.load('health_data.kess', password='secret')
 print(data.head())
 print(data.groupby('country')['life_expectancy'].mean())
 print(data.corr())
@@ -24,7 +24,7 @@ Health research centers in Africa have valuable data — clinical trials, diseas
 Existing solutions (federated learning, synthetic GANs) require cloud connectivity, large compute budgets, and specialist data engineers. NeuroData requires none of these:
 
 - **Encode once** on the data owner's local machine
-- **Share a file** — a 1–5 MB `.model` instead of a CSV
+- **Share a file** — a 1–5 MB `.kess` instead of a CSV
 - **Query anywhere** — the recipient uses a standard pandas-like API
 - **No raw data moves** — the model reconstructs records on demand
 
@@ -55,8 +55,8 @@ Fidelity: **98.6 / 100**. The model memorises the dataset with near-perfect reco
 Access control via AES-256-GCM encryption — only someone with the password can load the file.
 
 ```python
-neurodata.fit(df, 'data.model', password='secret')
-data = neurodata.load('data.model', password='secret')
+neurodata.fit(df, 'data.kess', password='secret')
+data = neurodata.load('data.kess', password='secret')
 ```
 
 ### With Differential Privacy
@@ -64,7 +64,7 @@ Fidelity: **~50 / 100** at ε=5. Formal (ε, δ)-DP guarantee via DP-SGD trainin
 Use when a mathematical privacy proof is required (e.g. ethics board submission, GDPR compliance).
 
 ```python
-neurodata.fit(df, 'data.model', epsilon=5.0, delta=1e-5, epochs=1500)
+neurodata.fit(df, 'data.kess', epsilon=5.0, delta=1e-5, epochs=1500)
 ```
 
 ---
@@ -95,7 +95,7 @@ DP-SGD (when `epsilon` is set): per-sample gradient clipping → Gaussian noise 
 
 ## Model File Format
 
-The `.model` file contains neural network weights, column metadata, and dataset shape.
+The `.kess` file contains neural network weights, column metadata, and dataset shape.
 
 With a password:
 - Key derivation: PBKDF2-HMAC-SHA256, 200,000 iterations, random 16-byte salt
@@ -107,7 +107,7 @@ With a password:
 ## NeuroFrame API
 
 ```python
-data = neurodata.load('health.model')
+data = neurodata.load('health.kess')
 
 data.head(10)                              # first N rows as DataFrame
 data.describe()                            # summary statistics

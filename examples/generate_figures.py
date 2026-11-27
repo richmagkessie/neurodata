@@ -46,7 +46,7 @@ ax.set_xlim(0, 13); ax.set_ylim(0, 4.8); ax.axis('off')
 
 C_OWNER  = '#1a4f72'   # dark blue  — data owner
 C_OWNER_L= '#d6eaf8'   # light blue panel
-C_MODEL  = '#1e8449'   # dark green — .model file
+C_MODEL  = '#1e8449'   # dark green — .kess file
 C_MODEL_L= '#d5f5e3'   # light green panel
 C_RES    = '#6c3483'   # dark purple — researcher
 C_RES_L  = '#e8daef'   # light purple panel
@@ -96,13 +96,13 @@ varrow(ax, 1.95, 1.7, 1.4)
 ax.text(0.82, 1.3, u'↑', ha='center', va='center', fontsize=14, color=C_RED)
 ax.text(2.52, 1.3, u'↑', ha='center', va='center', fontsize=14, color='#5d6d7e')
 
-# ── PANEL 2: .model file ─────────────────────────────────────────────────────
+# ── PANEL 2: .kess file ─────────────────────────────────────────────────────
 ax.add_patch(FancyBboxPatch((4.15, 1.0), 2.5, 2.8, boxstyle='round,pad=0.12',
              facecolor=C_MODEL_L, edgecolor=C_MODEL, linewidth=2.0, linestyle='-', zorder=1))
-ax.text(5.4, 3.62, '.model FILE', ha='center', va='center',
+ax.text(5.4, 3.62, '.kess FILE', ha='center', va='center',
         fontsize=10.5, color=C_MODEL, fontweight='bold')
 
-rbox(ax, 4.4, 2.3, 2.0, 0.85, 'africa.model', 'Encrypted binary', fc=C_MODEL, fs=9.5)
+rbox(ax, 4.4, 2.3, 2.0, 0.85, 'africa.kess', 'Encrypted binary', fc=C_MODEL, fs=9.5)
 
 ax.text(5.4, 2.1,  'AES-256-GCM key',  ha='center', fontsize=8, color=C_GREY)
 ax.text(5.4, 1.78, 'PBKDF2  200k iters', ha='center', fontsize=8, color=C_GREY)
@@ -121,7 +121,7 @@ ax.add_patch(FancyBboxPatch((7.1, 0.4), 5.65, 4.0, boxstyle='round,pad=0.12',
 ax.text(9.93, 4.22, 'DATA RECIPIENT', ha='center', va='center',
         fontsize=10.5, color=C_RES, fontweight='bold')
 
-rbox(ax, 7.35, 3.05, 5.15, 0.95, 'NeuroFrame  ( data = neurodata.load("africa.model") )',
+rbox(ax, 7.35, 3.05, 5.15, 0.95, 'NeuroFrame  ( data = neurodata.load("africa.kess") )',
      'Password-gated  |  Pandas-compatible interface', fc=C_RES, fs=9.0)
 
 # API operation boxes in a clean 3x2 grid
@@ -162,7 +162,7 @@ scores = []
 per_col_scores = {c: [] for c in num_cols}
 
 for eps, label in zip(eps_vals, eps_labels):
-    path = f'/tmp/fig2_eps{label}.model'
+    path = f'/tmp/fig2_eps{label}.kess'
     ep = 1200 if eps is not None else 800
     neurodata.fit(df, path=path, epochs=ep, epsilon=eps, verbose=False)
     d = neurodata.load(path)
@@ -223,9 +223,9 @@ df_noisy = df_clean.copy()
 for col in num_cols:
     df_noisy[col] = df_clean[col] + np.random.normal(0, df_clean[col].std()*0.3, len(df_clean))
 
-data_nodp = neurodata.load('/tmp/fig2_epsNo DP.model')
-neurodata.fit(df_clean, path='/tmp/fig3_dp5.model', epochs=1200, epsilon=5.0, verbose=False)
-data_dp5  = neurodata.load('/tmp/fig3_dp5.model')
+data_nodp = neurodata.load('/tmp/fig2_epsNo DP.kess')
+neurodata.fit(df_clean, path='/tmp/fig3_dp5.kess', epochs=1200, epsilon=5.0, verbose=False)
+data_dp5  = neurodata.load('/tmp/fig3_dp5.kess')
 
 methods = [
     ('Raw CSV',           evaluate(df_clean, df_clean)['overall_score'],           'None',         PALETTE['red']),

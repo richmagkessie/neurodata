@@ -46,8 +46,8 @@ print(f"Outcomes: {df['trial_outcome'].value_counts().to_dict()}\n")
 print("=" * 55)
 print("Training NeuroData (no DP, 800 epochs)...")
 print("=" * 55)
-neurodata.fit(df, path=str(OUT / 'rct_nodp.model'), epochs=800, verbose=False)
-frame_nodp = neurodata.load(str(OUT / 'rct_nodp.model'))
+neurodata.fit(df, path=str(OUT / 'rct_nodp.kess'), epochs=800, verbose=False)
+frame_nodp = neurodata.load(str(OUT / 'rct_nodp.kess'))
 df_nodp    = frame_nodp.to_dataframe()
 
 report_nodp = evaluate(df, df_nodp)
@@ -57,9 +57,9 @@ print(f"No-DP fidelity:  {report_nodp['overall_score']:.1f} / 100\n")
 print("=" * 55)
 print("Training NeuroData (DP ε=5, 1500 epochs)...")
 print("=" * 55)
-neurodata.fit(df, path=str(OUT / 'rct_dp5.model'),
+neurodata.fit(df, path=str(OUT / 'rct_dp5.kess'),
               epochs=1500, epsilon=5.0, delta=1e-5, verbose=False)
-frame_dp5 = neurodata.load(str(OUT / 'rct_dp5.model'))
+frame_dp5 = neurodata.load(str(OUT / 'rct_dp5.kess'))
 df_dp5    = frame_dp5.to_dataframe()
 
 report_dp5 = evaluate(df, df_dp5)

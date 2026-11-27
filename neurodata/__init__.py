@@ -9,7 +9,7 @@ def fit(df, path, epochs=500, lr=1e-3, verbose=True,
     Train a model on df and save it to path.
 
     epsilon  : differential privacy budget (None = no DP)
-    password : encrypt the .model file (None = no encryption)
+    password : encrypt the .kess file (None = no encryption)
     """
     trainer = NeuroDataTrainer(df, epochs=epochs, lr=lr, epsilon=epsilon, delta=delta)
     trainer.train(verbose=verbose)
@@ -17,7 +17,7 @@ def fit(df, path, epochs=500, lr=1e-3, verbose=True,
 
 
 def load(path, password=None) -> NeuroFrame:
-    """Load a saved .model file and return a NeuroFrame."""
+    """Load a saved .kess file and return a NeuroFrame."""
     return NeuroFrame(path, password=password)
 
 

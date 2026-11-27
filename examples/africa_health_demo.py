@@ -23,8 +23,8 @@ print(df.head(5).to_string())
 
 # ── 1. Train without DP — full fidelity ceiling ───────────────────────────────
 print("\n=== Training (no DP) ===")
-neurodata.fit(df, path=str(OUT / 'africa_nodp.model'), epochs=800, verbose=False)
-data_nodp = neurodata.load(str(OUT / 'africa_nodp.model'))
+neurodata.fit(df, path=str(OUT / 'africa_nodp.kess'), epochs=800, verbose=False)
+data_nodp = neurodata.load(str(OUT / 'africa_nodp.kess'))
 
 print("\ndata.head():")
 print(data_nodp.head())
@@ -46,9 +46,9 @@ eps_labels = ['1.0', '2.0', '5.0', '10.0', '∞']
 results = []
 
 for eps, label in zip(eps_vals, eps_labels):
-    neurodata.fit(df, path=str(OUT / f'africa_eps{label}.model'),
+    neurodata.fit(df, path=str(OUT / f'africa_eps{label}.kess'),
                   epochs=800, epsilon=eps, verbose=False)
-    d = neurodata.load(str(OUT / f'africa_eps{label}.model'))
+    d = neurodata.load(str(OUT / f'africa_eps{label}.kess'))
     r = evaluate(df, d.to_dataframe())
     results.append({'label': label, 'score': r['overall_score']})
     print(f"  ε={label:>4}  fidelity={r['overall_score']:.1f}/100")

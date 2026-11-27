@@ -1,6 +1,6 @@
 """
 Full demo: DP training + encryption + fidelity report
-Simulates Kintampo sharing a malaria dataset via a locked .model file.
+Simulates Kintampo sharing a malaria dataset via a locked .kess file.
 """
 import sys
 from pathlib import Path
@@ -25,7 +25,7 @@ df = pd.DataFrame({
 print("=== Kintampo: training with differential privacy (ε=2.0) ===")
 neurodata.fit(
     df,
-    path=str(OUT / 'malaria_locked.model'),
+    path=str(OUT / 'malaria_locked.kess'),
     epochs=600,
     epsilon=2.0,
     password='kintampo2026',
@@ -34,7 +34,7 @@ neurodata.fit(
 
 # ── RESEARCHER SIDE: load with password, work normally ───────────────────────
 print("\n=== Researcher: loading locked model ===")
-data = neurodata.load(str(OUT / 'malaria_locked.model'), password='kintampo2026')
+data = neurodata.load(str(OUT / 'malaria_locked.kess'), password='kintampo2026')
 
 print("\ndata.head():")
 print(data.head())
@@ -48,7 +48,7 @@ print(data.groupby('outcome')['age'].mean())
 # ── Wrong password test ───────────────────────────────────────────────────────
 print("\n=== Wrong password attempt ===")
 try:
-    bad = neurodata.load(str(OUT / 'malaria_locked.model'), password='wrongpass')
+    bad = neurodata.load(str(OUT / 'malaria_locked.kess'), password='wrongpass')
 except ValueError as e:
     print(f"Blocked: {e}")
 

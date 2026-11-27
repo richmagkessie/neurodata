@@ -34,13 +34,13 @@ df = pd.DataFrame({
 print(f"Original data:  {df.shape[0]} rows × {df.shape[1]} columns")
 print(df.head(3).to_string(), "\n")
 
-# ── 2. Train and save as a .model file ────────────────────────────────────────
+# ── 2. Train and save as a .kess file ────────────────────────────────────────
 print("Training NeuroData model (200 epochs)...")
-neurodata.fit(df, path=str(ROOT / 'quickstart.model'), epochs=200)
+neurodata.fit(df, path=str(ROOT / 'quickstart.kess'), epochs=200)
 print()
 
 # ── 3. Load and query — no CSV needed ─────────────────────────────────────────
-data = neurodata.load(str(ROOT / 'quickstart.model'))
+data = neurodata.load(str(ROOT / 'quickstart.kess'))
 
 print("data.head():")
 print(data.head(3).to_string())
@@ -56,17 +56,17 @@ print()
 
 # ── 4. Encrypted model (password-protected) ───────────────────────────────────
 print("Training encrypted model (password protected)...")
-neurodata.fit(df, path=str(ROOT / 'quickstart_locked.model'),
+neurodata.fit(df, path=str(ROOT / 'quickstart_locked.kess'),
               epochs=200, password='secret123')
 print()
 
-locked = neurodata.load(str(ROOT / 'quickstart_locked.model'), password='secret123')
+locked = neurodata.load(str(ROOT / 'quickstart_locked.kess'), password='secret123')
 print("Loaded encrypted model — data.describe():")
 print(locked.describe().round(2))
 print()
 
 try:
-    neurodata.load(str(ROOT / 'quickstart_locked.model'), password='wrongpass')
+    neurodata.load(str(ROOT / 'quickstart_locked.kess'), password='wrongpass')
 except ValueError as e:
     print(f"Wrong password correctly rejected: {e}")
 print()

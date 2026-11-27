@@ -60,16 +60,16 @@ print(f"Aggregates only:      {agg_report['overall_score']:.1f}/100  (privacy: m
 
 # ── Our approach: NeuroData no DP ─────────────────────────────────────────────
 print("Training NeuroData (no DP)...")
-neurodata.fit(df_temp, path=str(OUT / 'africa_nodp.model'), epochs=800, verbose=False)
-data_nodp = neurodata.load(str(OUT / 'africa_nodp.model'))
+neurodata.fit(df_temp, path=str(OUT / 'africa_nodp.kess'), epochs=800, verbose=False)
+data_nodp = neurodata.load(str(OUT / 'africa_nodp.kess'))
 nodp_report = evaluate(df_temp, data_nodp.to_dataframe())
 print(f"NeuroData (no DP):    {nodp_report['overall_score']:.1f}/100  (privacy: partial)")
 
 # ── Our approach: NeuroData DP ε=5 ───────────────────────────────────────────
 print("Training NeuroData DP ε=5 (more epochs)...")
-neurodata.fit(df_temp, path=str(OUT / 'africa_dp5_long.model'),
+neurodata.fit(df_temp, path=str(OUT / 'africa_dp5_long.kess'),
               epochs=1500, epsilon=5.0, verbose=False)
-data_dp5 = neurodata.load(str(OUT / 'africa_dp5_long.model'))
+data_dp5 = neurodata.load(str(OUT / 'africa_dp5_long.kess'))
 dp5_report = evaluate(df_temp, data_dp5.to_dataframe())
 print(f"NeuroData (DP ε=5):   {dp5_report['overall_score']:.1f}/100  (privacy: formal DP)")
 

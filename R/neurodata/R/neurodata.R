@@ -1,10 +1,10 @@
 #' Train a NeuroData model on a data frame
 #'
-#' Encodes a tabular dataset as a neural network and saves it to a .model file.
+#' Encodes a tabular dataset as a neural network and saves it to a .kess file.
 #' The file can be shared instead of the raw data.
 #'
 #' @param df A data.frame or tibble to encode.
-#' @param path Output path for the .model file (e.g. "health.model").
+#' @param path Output path for the .kess file (e.g. "health.kess").
 #' @param epochs Number of training epochs. Default 500. Use 800+ for larger
 #'   datasets or higher fidelity.
 #' @param epsilon Differential privacy budget. Smaller = stronger privacy,
@@ -21,13 +21,13 @@
 #' df <- read.csv("trial_data.csv")
 #'
 #' # No privacy — highest fidelity
-#' neurodata_fit(df, "trial.model", epochs = 800L)
+#' neurodata_fit(df, "trial.kess", epochs = 800L)
 #'
 #' # With differential privacy
-#' neurodata_fit(df, "trial_dp.model", epochs = 1500L, epsilon = 5.0)
+#' neurodata_fit(df, "trial_dp.kess", epochs = 1500L, epsilon = 5.0)
 #'
 #' # Encrypted (password-protected)
-#' neurodata_fit(df, "trial_locked.model", password = "secret123")
+#' neurodata_fit(df, "trial_locked.kess", password = "secret123")
 #' }
 #' @export
 neurodata_fit <- function(df, path,
@@ -51,10 +51,10 @@ neurodata_fit <- function(df, path,
 
 #' Load a NeuroData model and reconstruct the dataset
 #'
-#' Loads a .model file and returns a data frame of reconstructed records.
+#' Loads a .kess file and returns a data frame of reconstructed records.
 #' The original CSV is never needed — only the model file.
 #'
-#' @param path Path to the .model file.
+#' @param path Path to the .kess file.
 #' @param password Decryption password if the model was saved with one.
 #'   Default NULL.
 #'
@@ -64,12 +64,12 @@ neurodata_fit <- function(df, path,
 #' @examples
 #' \dontrun{
 #' # Basic load
-#' df <- neurodata_load("trial.model")
+#' df <- neurodata_load("trial.kess")
 #' head(df)
 #' summary(df)
 #'
 #' # Load encrypted model
-#' df <- neurodata_load("trial_locked.model", password = "secret123")
+#' df <- neurodata_load("trial_locked.kess", password = "secret123")
 #'
 #' # Use with dplyr
 #' library(dplyr)
@@ -105,7 +105,7 @@ neurodata_load <- function(path, password = NULL) {
 #' @examples
 #' \dontrun{
 #' original      <- read.csv("trial_data.csv")
-#' reconstructed <- neurodata_load("trial.model")
+#' reconstructed <- neurodata_load("trial.kess")
 #'
 #' report <- neurodata_fidelity(original, reconstructed)
 #' cat("Overall fidelity:", report$overall_score, "/ 100\n")

@@ -1,5 +1,5 @@
 """
-Access control: AES-GCM encryption on .model files.
+Access control: AES-GCM encryption on .kess files.
 Only someone with the correct password can load the model.
 """
 import os

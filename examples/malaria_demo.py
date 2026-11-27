@@ -1,5 +1,5 @@
 """
-Demo: encode a malaria-like health dataset into a .model file,
+Demo: encode a malaria-like health dataset into a .kess file,
 then work with it exactly like a CSV — no raw data needed.
 """
 import sys
@@ -25,11 +25,11 @@ print(df.head())
 
 # ── 2. Train the model on the data — this is what Kintampo runs locally ───────
 OUT = Path(__file__).parent
-neurodata.fit(df, path=str(OUT / 'malaria.model'), epochs=600, verbose=True)
+neurodata.fit(df, path=str(OUT / 'malaria.kess'), epochs=600, verbose=True)
 
 # ── 3. Load the model — this is what the researcher receives ──────────────────
 print("\n=== Loading model (no CSV, no raw data) ===")
-data = neurodata.load(str(OUT / 'malaria.model'))
+data = neurodata.load(str(OUT / 'malaria.kess'))
 
 # ── 4. Use it exactly like a dataframe ────────────────────────────────────────
 print("\ndata.shape:", data.shape)

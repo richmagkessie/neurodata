@@ -1,6 +1,6 @@
 # NeuroData: Neural Dataset Encoding for Privacy-Preserving Data Sharing
 
-**NeuroData** encodes a tabular dataset as a compact neural network. Instead of sharing a CSV file, you share a `.model` file. Recipients query the model directly using a pandas-compatible interface — no raw data ever leaves the data owner.
+**NeuroData** encodes a tabular dataset as a compact neural network. Instead of sharing a CSV file, you share a `.kess` file. Recipients query the model directly using a pandas-compatible interface — no raw data ever leaves the data owner.
 
 ---
 
@@ -8,7 +8,7 @@
 
 Traditional data sharing: `data.csv` → recipient reads records directly.
 
-NeuroData: `data.model` → recipient queries a function that reconstructs records on demand.
+NeuroData: `data.kess` → recipient queries a function that reconstructs records on demand.
 
 The model is a neural network trained to map **row indices → column values**. It memorizes the dataset. The model file is what gets shared — not the data.
 
@@ -16,10 +16,10 @@ The model is a neural network trained to map **row indices → column values**. 
 import neurodata
 
 # Data owner: encode the dataset
-neurodata.fit(df, path='health_data.model', epochs=800)
+neurodata.fit(df, path='health_data.kess', epochs=800)
 
 # Data recipient: query the model like a DataFrame
-data = neurodata.load('health_data.model')
+data = neurodata.load('health_data.kess')
 print(data.head())
 print(data.groupby('country')['life_expectancy'].mean())
 print(data.corr())
@@ -35,8 +35,8 @@ print(data.corr())
 - Use when: analytical fidelity is the priority
 
 ```python
-neurodata.fit(df, path='data.model', password='secret123')
-data = neurodata.load('data.model', password='secret123')
+neurodata.fit(df, path='data.kess', password='secret123')
+data = neurodata.load('data.kess', password='secret123')
 ```
 
 ### With Differential Privacy (formal guarantee)
@@ -45,7 +45,7 @@ data = neurodata.load('data.model', password='secret123')
 - Use when: formal privacy proof is required
 
 ```python
-neurodata.fit(df, path='data.model', epsilon=5.0, delta=1e-5, epochs=1500)
+neurodata.fit(df, path='data.kess', epsilon=5.0, delta=1e-5, epochs=1500)
 ```
 
 ---
@@ -86,7 +86,7 @@ Noise multiplier: `sigma = sqrt(2 * ln(1.25 / delta)) / epsilon`
 
 ## Model File Format
 
-The `.model` file contains:
+The `.kess` file contains:
 - Neural network weights (PyTorch state_dict)
 - Column metadata: names, types, numerical means/stds, categorical encodings
 - Dataset shape: n_rows
@@ -102,7 +102,7 @@ With a password, the file is encrypted:
 ## NeuroFrame Interface
 
 ```python
-data = neurodata.load('health.model')
+data = neurodata.load('health.kess')
 
 data.head(10)              # first 10 rows as DataFrame
 data.describe()            # summary statistics
@@ -224,10 +224,10 @@ import neurodata
 df = pd.read_csv('your_data.csv')
 
 # Encode as a model (no DP, fast)
-neurodata.fit(df, 'my_data.model', epochs=500)
+neurodata.fit(df, 'my_data.kess', epochs=500)
 
 # Query the model
-data = neurodata.load('my_data.model')
+data = neurodata.load('my_data.kess')
 print(data.describe())
 
 # Check fidelity

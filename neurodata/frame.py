@@ -1,14 +1,14 @@
 import torch
 import numpy as np
 import pandas as pd
-from .model import NeuroDataEncoder
+from .kess import NeuroDataEncoder
 from .access import load_locked
 
 
 class NeuroFrame:
     """
     Drop-in pandas-like interface backed by a trained neural model.
-    The raw data never needs to be present — only the .model file.
+    The raw data never needs to be present — only the .kess file.
     """
 
     def __init__(self, path: str, password: str = None):

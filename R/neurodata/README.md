@@ -55,16 +55,16 @@ library(neurodata)
 df <- read.csv("data/malaria_rct_synthetic.csv")
 
 # ── 2. Train (encode) the model ──────────────────────────────────────────────
-neurodata_fit(df, "trial.model", epochs = 800L)
+neurodata_fit(df, "trial.kess", epochs = 800L)
 
 # with differential privacy (ε = 5)
-neurodata_fit(df, "trial_dp.model", epochs = 1500L, epsilon = 5.0)
+neurodata_fit(df, "trial_dp.kess", epochs = 1500L, epsilon = 5.0)
 
 # with AES-256-GCM encryption
-neurodata_fit(df, "trial_locked.model", password = "s3cret!")
+neurodata_fit(df, "trial_locked.kess", password = "s3cret!")
 
-# ── 3. Reconstruct (share and use the .model file, not the CSV) ──────────────
-recon <- neurodata_load("trial.model")
+# ── 3. Reconstruct (share and use the .kess file, not the CSV) ──────────────
+recon <- neurodata_load("trial.kess")
 head(recon)
 summary(recon)
 
@@ -86,7 +86,7 @@ nd_summary(df, recon)
 
 | Function | Description |
 |---|---|
-| `neurodata_fit(df, path, ...)` | Train and save a `.model` file |
+| `neurodata_fit(df, path, ...)` | Train and save a `.kess` file |
 | `neurodata_load(path, ...)` | Load a model; returns a `data.frame` |
 | `neurodata_fidelity(original, recon)` | Returns fidelity report as a named list |
 | `nd_summary(original, recon)` | Prints per-column fidelity scores to console |
@@ -96,7 +96,7 @@ nd_summary(df, recon)
 | Parameter | Default | Description |
 |---|---|---|
 | `df` | — | `data.frame` or tibble to encode |
-| `path` | — | Output path for the `.model` file |
+| `path` | — | Output path for the `.kess` file |
 | `epochs` | `500L` | Training epochs (800+ for higher fidelity) |
 | `epsilon` | `NULL` | DP budget — smaller = stronger privacy; `NULL` = no DP |
 | `delta` | `1e-5` | DP failure probability |
